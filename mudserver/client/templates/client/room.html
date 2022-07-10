@@ -1,0 +1,70 @@
+<!-- chat/templates/chat/room.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>MUD client</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      .resizable-content {
+        min-height: 80%;
+        min-width: 80%;
+        border: 2px solid black;
+        resize: both;
+        overflow: auto;
+        max-height: fit-content;
+        max-width: fit-content;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      contenteditable="false"
+      id="chat-log"
+      cols="100"
+      rows="20"
+      class="resizable-content"
+    ></div>
+    <br />
+    <input id="chat-message-input" type="text" size="100" />
+    <br />
+    <input id="chat-message-submit" type="button" value="Send" />
+    <script>
+      const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/client/',
+      )
+
+      chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data)
+        document.querySelector('#chat-log').innerHTML += '<br>' + data.message
+      }
+
+      chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly')
+      }
+
+      document.querySelector('#chat-message-input').focus()
+      document.querySelector('#chat-message-input').onkeyup = function (e) {
+        if (e.keyCode === 13) {
+          // enter, return
+          document.querySelector('#chat-message-submit').click()
+        }
+      }
+
+      document.querySelector('#chat-message-submit').onclick = function (e) {
+        const messageInputDom = document.querySelector('#chat-message-input')
+        const message = messageInputDom.value
+        chatSocket.send(
+          JSON.stringify({
+            message: message,
+          }),
+        )
+        messageInputDom.value = ''
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+@startuml
+
+' !theme plain
+' top to bottom direction
+' skinparam linetype ortho
+
+actor user as user
+participant server as server
+participant GameEngine as game_engine
+participant ModelManager as model_manager
+participant Database as database
+participant MapNavigator as map_navigator
+participant CommandParser as command_parser
+participant Redis as redis
+
+== Registration ==
+user -> server : register username password
+server -> game_engine : register_user username password
+game_engine -> model_manager : create user with username password
+alt successful case
+   game_engine -> server : user created
+   server -> user : user created
+else Error : User already exists
+   game_engine -> server : user already exists
+end
+server -> user : user already exists
+
+== Connection ==
+user -> server : connect username password
+server -> game_engine : connect_user username password
+game_engine <-> model_manager : Authenticate user with username password
+alt successful case
+   game_engine -> server : User logged in
+   game_engine -> redis : Announce user logged in
+   game_engine <-> map_navigator : Load room details for user
+   server -> user : user created
+else Error : Username/Password is wrong
+   game_engine -> server : Incorrect username or password
+   server -> user : Incorrect username or password
+end
+
+
+== Look ==
+user -> server : look
+server -> game_engine : look 
+game_engine <-> model_manager : Get all players in same location
+game_engine <-> map_navigator : Get room name and description
+game_engine -> server : Send users in room with room name and description
+
+== Move ==
+user -> server : direction
+server -> game_engine : move direction
+game_engine <-> map_navigator : Get next room in direction
+game_engine <-> model_manager : Update user location
+
+== Say ==
+user -> server : say message
+server -> game_engine : say message
+game_engine -> redis : Announce message with location id
+server -> server : If user is in the same location, broadcast message to the users
+
+
+
+
+
+@enduml
