@@ -1,0 +1,17 @@
+# For communicating with websockets
+websockets
+
+# For django channels
+channels==3.0.5
+channels-redis==3.4.0
+
+# ASGI production server for Django
+daphne==3.0.2
+
+# For django rest framework
+Django==4.0.6
+
+# For unit and integration tests
+pytest==7.1.2
+pytest-django==4.5.2
+selenium==4.3.0
