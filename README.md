@@ -8,8 +8,6 @@ This server is written in Python and uses the Django channels along with Redis b
 
 At this stage, the server does not support other clients than the MUD client provided along with the server.
 
-New commands can be added to the server by adding them to the `commands` dictionary and the game play can be customized by adding them to the `game` dictionary.
-
 ## Requirements
 
 You will need to install Python (3.9+) to run the server.
@@ -98,7 +96,7 @@ Please refer the [docs](docs) folder for the design decisions made in the creati
 3. In game customizable command parser, game play, and game rooms.
 4. Ticks in the game engine to make it more realistic.
 5. Separating the logic from the network layer. Now the game logic is tied with the network layer. Need to isolate the game logic from the network layer.
-6. Coordinate system of the rooms : Cartesian, Polar, Spherical, etc.
+6. Coordinate system of the rooms : For e.g support for cartesian coordinates
 7. Exception handling
 8. Integration testing
 9. Isolate string formatting from the game logic

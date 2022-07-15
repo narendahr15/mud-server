@@ -2,7 +2,7 @@
 
 ## Disclaimer
 
-The design decisions are heavily influenced by the design of Evennia MUD server. Evennia is a free MUD server software that is open source and free to use. Evennia is used a reference for the design decisions of the MUD server.
+The design decisions are heavily influenced by the Evennia MUD server. Evennia is a free MUD server software that is open source and free to use. Evennia is used a reference for the design decisions of the MUD server.
 
 A simple MUD server could be compared with a IRC chat room with additional features like character creation, login, and chat.
 
@@ -18,7 +18,7 @@ The docker-compose.yml file was used to run the server and the clients. Docker w
 
 Websockets are used to communicate between the server and the clients. The connection betweem the client and server is always open till one of the two ends disconnects.
 
-The server is designed to be run asynchronously. This means that the server will not wait for the client to send a command. Instead, the server will send the command to the client and the client will send the command to the server. This is done to make the server more responsive.
+The server is designed to run asynchronously instead of continiously polling the sockets. This is done to make the server more responsive.
 
 One of the key considerations in choosing the server framework is that how easy is to make server asynchronous. We could use Python's AsyncIO library to make the server asynchronous but we need to add a lot of boiler plate code to make it work.
 
