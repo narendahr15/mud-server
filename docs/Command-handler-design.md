@@ -5,7 +5,7 @@ The commands modules consists of multiple commands and a command parser. The com
 ```plantuml
 @startuml
 
-!theme plain
+!theme spacelab
 left to right direction
 skinparam linetype polyline
 
