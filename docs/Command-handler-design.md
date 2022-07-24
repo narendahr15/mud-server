@@ -7,7 +7,7 @@ The commands modules consists of multiple commands and a command parser. The com
 
 !theme plain
 left to right direction
-skinparam linetype ortho
+skinparam linetype polyline
 
 
 abstract class Command {
@@ -38,7 +38,7 @@ class CommandParser {
    +get_commands(is_user_authenticated : bool) -> list
 }
 
-CommandParser --* Command
+CommandParser "1" *-- "many" Command : contains
 @enduml
 
 

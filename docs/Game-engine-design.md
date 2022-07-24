@@ -43,6 +43,8 @@ class commands.CommandParser {
    +get_commands(is_user_authenticated : bool) -> list
 }
 
+class PlayerProfile
+
 class AsynWebSocketConsumer {
    game_engine: GameEngine
     +connect(url: String)
@@ -94,6 +96,7 @@ GameEngine --* AsynWebSocketConsumer
 AsynWebSocketConsumer --* GameEngine
 GameEngine --o MapNavigator
 GameEngine --o commands.CommandParser
+GameEngine --o PlayerProfile
 
 @enduml
 ```
